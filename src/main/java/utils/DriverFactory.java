@@ -14,7 +14,6 @@ public class DriverFactory {
         } else if (browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
             return new FirefoxDriver();
-
         }
         throw new RuntimeException("unsupported browser");
     }

@@ -16,6 +16,7 @@ public class SuccessPage {
 
     By successMsg = By.className("complete-header");
 
+
     public String getSuccessMsg() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(successMsg)).getText();

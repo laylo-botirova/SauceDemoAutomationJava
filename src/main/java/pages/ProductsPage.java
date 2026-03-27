@@ -14,7 +14,6 @@ public class ProductsPage {
         String xpath = "//div[text()='"+ productName + "']/ancestor::div[@class='inventory_item']//button";
         driver.findElement(By.xpath(xpath)).click();
 
-
     }
     public void goToCart(){
         driver.findElement(By.className("shopping_cart_link")).click();
