@@ -12,14 +12,17 @@ public class BaseTest {
 
     @Parameters("browser")
     @BeforeMethod
-    public void setup(String browser){
+    public void setup(String browser) {
         driver = DriverFactory.getDriver(browser);
         driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
 
     }
+
     @AfterMethod
-    public void teardown(){
-        driver.quit();
+    public void teardown() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }

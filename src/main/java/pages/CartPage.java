@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class CartPage {
-WebDriver driver;
+    WebDriver driver;
 
     public CartPage(WebDriver driver) {
         this.driver = driver;
@@ -23,14 +23,13 @@ WebDriver driver;
 
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", btn);
 
-        try { Thread.sleep(500); } catch (Exception ignored) {}
-
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn);
+        wait.until(ExpectedConditions.elementToBeClickable(btn)).click();
 
         wait.until(ExpectedConditions.urlContains("checkout-step-one"));
     }
-    public boolean isProductAvailable(String productName){
-        return driver.findElements(By.xpath("//div[text()='"+ productName + "']")).size()>0;
-
+    public boolean isProductAvailable(String productName) {
+        return driver.findElements(
+                By.xpath("//div[@class='inventory_item_name' and text()='" + productName + "']")
+        ).size() > 0;
     }
 }

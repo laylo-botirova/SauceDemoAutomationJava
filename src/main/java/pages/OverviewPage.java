@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,37 +12,43 @@ import java.util.List;
 
 public class OverviewPage {
     WebDriver driver;
-
-
-    public OverviewPage(WebDriver driver) {
-        this.driver = driver;
-    }
+    WebDriverWait wait;
 
     By itemPrices = By.className("inventory_item_price");
     By totalPrice = By.className("summary_total_label");
     By finishBtn = By.id("finish");
+    By itemTotalLabel = By.className("summary_subtotal_label");
+    By taxLabel = By.className("summary_tax_label");
 
-    public double getItemsTotal(){
-        List<WebElement> prices =driver.findElements(itemPrices);
+    public OverviewPage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+
+    public double getItemsTotal() {
+        List<WebElement> prices = driver.findElements(itemPrices);
         double sum = 0;
-
-        for(WebElement price: prices){
-            sum+= Double.parseDouble(price.getText().replace("$", ""));
+        for (WebElement price : prices) {
+            sum += Double.parseDouble(price.getText().replace("$", ""));
         }
-        return  sum;
-
+        return sum;
     }
 
-    public double getFinalTotal(){
-        String text = driver.findElement(totalPrice).getText();
-
-        return  Double.parseDouble(text.replace("Total: $",""));
+    public double getItemTotalLabel() {
+        String text = driver.findElement(itemTotalLabel).getText();
+        return Double.parseDouble(text.replace("Item total: $", ""));
     }
 
-    public void clickFinish(){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(finishBtn));
-        btn.click();
+    public double getTax() {
+        String text = driver.findElement(taxLabel).getText();
+        return Double.parseDouble(text.replace("Tax: $", ""));
     }
-}
+
+    public double getFinalTotal() {
+        String text = wait.until(ExpectedConditions.visibilityOfElementLocated(totalPrice)).getText();
+        return Double.parseDouble(text.replace("Total: $", ""));
+    }
+
+    public void clickFinish() {
+        wait.until(ExpectedConditions.elementToBeClickable(finishBtn)).click();
+    }}
