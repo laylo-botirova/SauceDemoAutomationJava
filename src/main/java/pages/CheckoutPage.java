@@ -23,10 +23,17 @@ import java.time.Duration;public class CheckoutPage {
     }
 
     public void fillInfo(String fn, String ln, String zc) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(firstName));
-        driver.findElement(firstName).sendKeys(fn);
-        driver.findElement(lastName).sendKeys(ln);
-        driver.findElement(zip).sendKeys(zc);
+        WebElement fnEl = wait.until(ExpectedConditions.elementToBeClickable(firstName));
+        fnEl.clear();
+        fnEl.sendKeys(fn);
+
+        WebElement lnEl = wait.until(ExpectedConditions.elementToBeClickable(lastName));
+        lnEl.clear();
+        lnEl.sendKeys(ln);
+
+        WebElement zipEl = wait.until(ExpectedConditions.elementToBeClickable(zip));
+        zipEl.clear();
+        zipEl.sendKeys(zc);
     }
 
     public void continueCheckout() {

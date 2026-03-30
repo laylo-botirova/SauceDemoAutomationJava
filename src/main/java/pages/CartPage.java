@@ -19,17 +19,19 @@ public class CartPage {
     public void checkout() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        WebElement btn = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("checkout")));
+        By checkoutBtn = By.id("checkout");
 
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", btn);
+        WebElement btn = wait.until(ExpectedConditions.presenceOfElementLocated(checkoutBtn));
 
-        wait.until(ExpectedConditions.elementToBeClickable(btn)).click();
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block:'center'});", btn
+        );
 
+        wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn)).click();
         wait.until(ExpectedConditions.urlContains("checkout-step-one"));
     }
     public boolean isProductAvailable(String productName) {
-        return driver.findElements(
-                By.xpath("//div[@class='inventory_item_name' and text()='" + productName + "']")
-        ).size() > 0;
+        return !driver.findElements(By.xpath("//div[@class='inventory_item_name' and text()='" + productName + "']")
+        ).isEmpty();
     }
 }

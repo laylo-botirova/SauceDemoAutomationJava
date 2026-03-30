@@ -18,19 +18,26 @@ public class ProductsPage {
 
     public void addProduct(String productName) {
         String xpath = "//div[@class='inventory_item']//div[text()='" + productName + "']/ancestor::div[@class='inventory_item']//button";
-        WebElement btn = driver.findElement(By.xpath(xpath));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", btn);
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(btn))
-                .click();
+        By locator = By.xpath(xpath);
+
+        WebElement btn = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block:'center'});", btn
+        );
+
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
     public void goToCart() {
-        WebElement cartBtn = driver.findElement(By.className("shopping_cart_link"));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", cartBtn);
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(cartBtn))
-                .click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement cartBtn = wait.until(
+                ExpectedConditions.elementToBeClickable(By.className("shopping_cart_link"))
+        );
+
+        cartBtn.click();
     }
 }

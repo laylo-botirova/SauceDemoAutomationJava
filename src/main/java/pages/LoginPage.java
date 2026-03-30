@@ -19,13 +19,14 @@ public class LoginPage {
     By password = By.id("password");
     By loginBtn = By.id("login-button");
 
-    public void login(String user, String pass){
-        driver.findElement(username).sendKeys(user);
-        driver.findElement(password).sendKeys(pass);
-        driver.findElement(loginBtn).click();
+    public void login(String user, String pass) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.urlContains("inventory"));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(username)).sendKeys(user);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(password)).sendKeys(pass);
+        wait.until(ExpectedConditions.elementToBeClickable(loginBtn)).click();
+
+        wait.until(ExpectedConditions.urlContains("inventory"));
     }
 }
 
