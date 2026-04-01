@@ -4,15 +4,20 @@ import base.DriverManager;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
+import utils.ConfigReader;
 import utils.DriverFactory;
 
 public class Hooks {
 
     @Before
     public void setup() {
-        WebDriver driver = DriverFactory.getDriver("chrome");
+        String browser = ConfigReader.get("browser");
+
+        WebDriver driver = DriverFactory.getDriver(browser);
+
         driver.manage().window().maximize();
-        driver.get("https://www.saucedemo.com/");
+        driver.get(ConfigReader.get("baseUrl"));
+
         DriverManager.setDriver(driver);
     }
     @After

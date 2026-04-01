@@ -15,20 +15,20 @@ public class BaseTest {
     @Parameters("browser")
     public void setup(String browser) {
 
-        // fallback if parameter is missing
         if (browser == null || browser.isEmpty()) {
             browser = ConfigReader.get("browser");
         }
 
         driver = DriverFactory.getDriver(browser);
-
         driver.manage().window().maximize();
         driver.get(ConfigReader.get("baseUrl"));
     }
 
     @AfterMethod
     public void teardown() {
-        DriverManager.quitDriver();
+       if (driver != null) {
+            driver.quit();
         }
+    }
     }
 

@@ -26,7 +26,7 @@ public class CheckoutSteps {
     public void addToCart(){
         productsPage = new ProductsPage(driver);
         productsPage.addProduct("Sauce Labs Backpack");
-
+        productsPage.goToCart();
 
     }
 
