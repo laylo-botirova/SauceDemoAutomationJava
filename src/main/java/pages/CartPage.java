@@ -27,8 +27,9 @@ public class CartPage {
                 "arguments[0].scrollIntoView({block:'center'});", btn
         );
 
-        wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn)).click();
-        wait.until(ExpectedConditions.urlContains("checkout-step-one"));
+        WebElement btnClickable = wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn));
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", btnClickable);        wait.until(ExpectedConditions.urlContains("checkout-step-one"));
     }
     public boolean isProductAvailable(String productName) {
         return !driver.findElements(By.xpath("//div[@class='inventory_item_name' and text()='" + productName + "']")

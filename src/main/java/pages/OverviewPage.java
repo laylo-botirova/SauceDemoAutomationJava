@@ -26,6 +26,7 @@ public class OverviewPage {
     }
 
     public double getItemsTotal() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(itemPrices));
         List<WebElement> prices = driver.findElements(itemPrices);
         double sum = 0;
         for (WebElement price : prices) {

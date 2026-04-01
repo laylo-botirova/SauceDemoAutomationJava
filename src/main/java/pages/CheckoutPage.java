@@ -38,6 +38,6 @@ import java.time.Duration;public class CheckoutPage {
 
     public void continueCheckout() {
         wait.until(ExpectedConditions.elementToBeClickable(continueBtn)).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("summary_total_label")));
+        wait.until(ExpectedConditions.urlContains("checkout-step-two"));
     }
 }
