@@ -4,14 +4,19 @@ import base.DriverManager;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.Parameters;
 import utils.ConfigReader;
 import utils.DriverFactory;
 
 public class Hooks {
 
     @Before
-    public void setup() {
-        String browser = ConfigReader.get("browser");
+    public void setup(io.cucumber.java.Scenario scenario) {
+        String browser = System.getProperty("browser");
+
+        if (browser == null || browser.isEmpty()) {
+            browser = ConfigReader.get("browser");
+        }
 
         WebDriver driver = DriverFactory.getDriver(browser);
 
